@@ -1,5 +1,5 @@
 import os
-from langchain_openai import ChatOpenAI
+
 from langchain_groq import ChatGroq
 from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_core.messages import AIMessage, HumanMessage
@@ -9,7 +9,7 @@ from langchain_core.output_parsers import StrOutputParser
 from dotenv import load_dotenv
 import streamlit as st
 
-openai_llm = ChatOpenAI(model="gpt-3.5-turbo")
+
 mixtral_llm = ChatGroq(temperature=0, model_name="mixtral-8x7b-32768")
 
 
