@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "chat-mysql-gui"
+version = "0.1.0"
+description = "Gui to chat to a Database"
+authors = ["Fernando Robledo <fernando.robledoruiz@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+streamlit = "^1.32.2"
+langchain = "^0.1.13"
+langchain-openai = "^0.1.1"
+langchain-groq = "^0.0.1"
+mysql-connector-python = "^8.3.0"
+python-dotenv = "^1.0.1"
+langchain-community = "^0.0.29"
+langchain-experimental = "^0.0.55"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
