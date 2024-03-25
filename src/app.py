@@ -105,8 +105,7 @@ with st.sidebar:
     st.text_input("User:", value=db_user, key="user")
     st.text_input("Host:", value=db_host, key="host")
     st.text_input("Port:", value=db_port, key="port")
-    st.text_input("Password:", type="password",
-                  key="password", value=db_password)
+    # st.text_input("Password:", type="password",key="password", value=db_password)
     st.text_input("Database:", key="database", value=db_database)
 
     if st.button("Connect"):
