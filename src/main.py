@@ -7,7 +7,7 @@ from app import run_app
 st.set_page_config(page_title="Chat to MySQL", page_icon=':speech_balloon:')
 st.title(body="Chat to MySQL")
 
-with open('/src/config.yaml') as file:
+with open('../config.yaml') as file:
     config = yaml.load(file, Loader=SafeLoader)
 
 authenticator = stauth.Authenticate(
