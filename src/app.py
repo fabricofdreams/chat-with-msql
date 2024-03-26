@@ -103,6 +103,7 @@ def run_app():
     # Sidebar
     with st.sidebar:
         st.subheader("Settings")
+        st.info("This application is a demo. It can be used for testing purposes only. It uses Groq as the LLM and works as a chatbot with the database. The database is already populated with data.")
         st.write(
             "This is an application using MySQL. Connect to the database and start chatting.")
 
