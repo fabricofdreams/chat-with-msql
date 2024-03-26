@@ -14,8 +14,8 @@ mixtral_llm = ChatGroq(temperature=0, model_name="mixtral-8x7b-32768")
 
 
 def init_database(user: str, password: str, host: str, port: str, database: str) -> SQLDatabase:
+    """Initialize the database connection."""
     db_uri = f'mysql+mysqlconnector://{user}:{password}@{host}:{port}/{database}'
-
     return SQLDatabase.from_uri(db_uri)
 
 
@@ -89,36 +89,37 @@ def run_app():
                 content="Hi there! I'm a SQL assistant. Ask me anything about your database.")
         ]
 
-    # Retrieve the database password
-    db_password = os.environ.get('DB1_PASSWORD')
-    db_user = os.environ.get('DB_USER')
-    db_host = os.environ.get('HOST')
-    db_port = os.environ.get('PORT')
-    db_database = os.environ.get('DATABASE')
+    # Retrieve the database password from the environment variable
+    st.session_state['user'] = os.environ.get('DB_USER')
+    st.session_state['password'] = os.environ.get('DB1_PASSWORD')
+    st.session_state['host'] = os.environ.get('HOST')
+    st.session_state['port'] = os.environ.get('PORT')
+    st.session_state['database'] = os.environ.get('DATABASE')
 
+    # Initialize the 'connected' key in session_state if it doesn't exist
+    if 'connected' not in st.session_state:
+        st.session_state['connected'] = False
+
+    # Sidebar
     with st.sidebar:
-
-        st.subheader(body="Settings")
+        st.subheader("Settings")
         st.write(
             "This is an application using MySQL. Connect to the database and start chatting.")
-        st.text_input("User:", value=db_user, key="user")
-        st.text_input("Host:", value=db_host, key="host")
-        st.text_input("Port:", value=db_port, key="port")
-        st.text_input("Password:", type="password",
-                      key="password", value=db_password)
-        st.text_input("Database:", key="database", value=db_database)
 
-        if st.button("Connect"):
-            with st.spinner("Connecting to database..."):
-                db = init_database(
-                    user=st.session_state['user'],
-                    password=st.session_state['password'],
-                    host=st.session_state['host'],
-                    port=st.session_state['port'],
-                    database=st.session_state['database']
-                )
-                st.session_state.db = db
-                st.success("Connected to database!")
+        # Only show the button if not connected
+        if not st.session_state['connected']:
+            if st.button("Connect"):
+                with st.spinner("Connecting to database..."):
+                    db = init_database(
+                        user=st.session_state['user'],
+                        password=st.session_state['password'],
+                        host=st.session_state['host'],
+                        port=st.session_state['port'],
+                        database=st.session_state['database']
+                    )
+                    st.session_state.db = db
+                    st.success("Connected to database!")
+                    st.session_state['connected'] = True
 
     for message in st.session_state.chat_history:
         if isinstance(message, AIMessage):
